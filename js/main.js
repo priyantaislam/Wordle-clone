@@ -3,21 +3,13 @@ document.addEventListener("DOMContentLoaded", () =>{
         createSquares();
 
         const guessedWords = [[]];
-        const availableSpace = 1;
+        let availableSpace = 1;
 
         const keys = document.querySelectorAll(".keyboard-row button")
 
-        //click event function for the keyboard
-        for (let i = 0; i < keys.length; i++) {
-                keys[i].onclick = ({target}) => {
-                        const key = target.getAttribute("data-key");
-                        //console.log(key);
-                }
-
-                
-                
-        }
-
+        
+        //******FUNCTIONS******//
+        
         function getCurrentWordArr () {
                 const numOfGuess = guessedWords.length;
                 return guessedWords[numOfGuess - 1];
@@ -29,6 +21,11 @@ document.addEventListener("DOMContentLoaded", () =>{
                 if(currentWordArr && currentWordArr.length < 5) {
                         currentWordArr.push(letter);
                 }
+
+                const availableSpaceEl = document.getElementById(String(availableSpace));
+                availableSpace = availableSpace + 1;
+                
+                availableSpaceEl.textContent = letter;
 
         }
 
@@ -44,6 +41,16 @@ document.addEventListener("DOMContentLoaded", () =>{
                         gameBoard.appendChild(square);
 
                 }
+        }
+
+        //click event function for the keyboard
+        for (let i = 0; i < keys.length; i++) {
+                keys[i].onclick = ({target}) => {
+                        const key = target.getAttribute("data-key");
+                        //console.log(key);
+                        updateGuessedWord(key);
+                }
+                
         }
 
 })
