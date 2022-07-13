@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", () =>{
 
         createSquares();
 
+        const guessedWords = [[]];
+        const availableSpace = 1;
+
         const keys = document.querySelectorAll(".keyboard-row button")
 
         //click event function for the keyboard
@@ -14,6 +17,21 @@ document.addEventListener("DOMContentLoaded", () =>{
                 
                 
         }
+
+        function getCurrentWordArr () {
+                const numOfGuess = guessedWords.length;
+                return guessedWords[numOfGuess - 1];
+        }
+
+        function updateGuessedWord(letter) {
+                const currentWordArr = getCurrentWordArr();
+
+                if(currentWordArr && currentWordArr.length < 5) {
+                        currentWordArr.push(letter);
+                }
+
+        }
+
 
         //drawing the game area grid
         function createSquares() {
