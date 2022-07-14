@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         let availableSpace = 1;
 
         let word = "swear";
+        let guessWordCount = 0;
 
         const keys = document.querySelectorAll(".keyboard-row button")
 
@@ -13,23 +14,29 @@ document.addEventListener("DOMContentLoaded", () =>{
         //******FUNCTIONS******//
         function handleSubmitWord() {
                 const currentWordArr = getCurrentWordArr();
-                if(currentWordArr.length != 5) {
+                if(currentWordArr.length !== 5) {
                         window.alert("Word must be 5 letters!");
 
+                } else {
+                        const currentWord = currentWordArr.join('');
+
+                        const interval = 200;
+                        currentWordArr.forEach((letter,index) => {
+                                setTimeout(() => {
+                                        const tileColor = "rgb(58,58,60"
+                                }, interval)
+                        })
+
+                        if(currentWord === word) {
+                                window.alert("Congratulations!");
+                 
+                        } else if(guessedWords.length === 6 && currentWordArr.length === 5) {
+                                window.alert(`Sorry, you have no more guesses! The word is ${word}.`);
+                        } else {
+                                guessedWords.push([]);
+                        }
                 }
-
-                const currentWord = currentWordArr.join('');
-
-                if(currentWord === word) {
-                        window.alert("Congratulations!");
-                }
-
-                if(guessedWords.length === 6 && currentWordArr.length == 5) {
-                        window.alert(`Sorry, you have no more guesses! The word is ${word}.`);
-                }
-
                 
-                guessedWords.push([]);
         }
 
 
@@ -60,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () =>{
                 for (let i = 0; i < 30; i++){
                         let square = document.createElement("div");
                         square.classList.add("square");
+                        square.classList.add("animate__animated");
                         square.setAttribute("id", i + 1);
                         gameBoard.appendChild(square);
 
@@ -69,15 +77,15 @@ document.addEventListener("DOMContentLoaded", () =>{
         //click event function for the keyboard
         for (let i = 0; i < keys.length; i++) {
                 keys[i].onclick = ({target}) => {
-                        const key = target.getAttribute("data-key");
+                        const letter = target.getAttribute("data-key");
                         //console.log(key);
                         
-                        if(key === 'enter') {
+                        if(letter === 'enter') {
                                 handleSubmitWord();
                                 return;
                         }
 
-                        updateGuessedWord(key);
+                        updateGuessedWord(letter);
                 }
                 
         }
