@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", () =>{
         let availableSpace = 1;
 
         let word = "swear";
-        let guessWordCount = 0;
+        let guessedWordCount = 0;
+        
 
         const keys = document.querySelectorAll(".keyboard-row button")
 
@@ -19,13 +20,20 @@ document.addEventListener("DOMContentLoaded", () =>{
 
                 } else {
                         const currentWord = currentWordArr.join('');
-
+                        const firstLetterId = guessedWordCount * 5  + 1;
                         const interval = 200;
                         currentWordArr.forEach((letter,index) => {
                                 setTimeout(() => {
-                                        const tileColor = "rgb(58,58,60"
-                                }, interval)
-                        })
+                                        const tileColor = "rgb(58,58,60";
+
+                                        const letterId = firstLetterId + index;
+                                        const letterEl = document.getElementById(letterId);
+                                        letterEl.classList.add("animate_flipInX");
+                                        letterEl.style = `background-color: ${tileColor};border-color:${tileColor}`;
+                                }, interval);
+                        });
+
+                        guessedWordCount += 1;
 
                         if(currentWord === word) {
                                 window.alert("Congratulations!");
@@ -35,6 +43,8 @@ document.addEventListener("DOMContentLoaded", () =>{
                         } else {
                                 guessedWords.push([]);
                         }
+
+
                 }
                 
         }
