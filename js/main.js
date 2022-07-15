@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () =>{
                         const interval = 200;
                         currentWordArr.forEach((letter,index) => {
                                 setTimeout(() => {
-                                        const tileColor = "rgb(58,58,60";
+                                        const tileColor = "rgb(58,58,60)";
 
                                         const letterId = firstLetterId + index;
                                         const letterEl = document.getElementById(letterId);
