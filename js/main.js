@@ -21,16 +21,16 @@ document.addEventListener("DOMContentLoaded", () =>{
                 } else {
                         const currentWord = currentWordArr.join('');
                         const firstLetterId = guessedWordCount * 5  + 1;
-                        const interval = 200;
+                        const interval = 300;
                         currentWordArr.forEach((letter,index) => {
                                 setTimeout(() => {
                                         const tileColor = "rgb(58,58,60)";
 
                                         const letterId = firstLetterId + index;
                                         const letterEl = document.getElementById(letterId);
-                                        letterEl.classList.add("animate_flipInX");
+                                        letterEl.classList.add("animate__flipInX");
                                         letterEl.style = `background-color: ${tileColor};border-color:${tileColor}`;
-                                }, interval);
+                                }, interval * index);
                         });
 
                         guessedWordCount += 1;
