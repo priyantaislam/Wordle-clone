@@ -19,7 +19,21 @@ document.addEventListener("DOMContentLoaded", () =>{
         //******FUNCTIONS******//
 
         function getTileColor(letter, index) {
-                
+
+                const correctLetter = word.includes(letter);
+
+                if(!correctLetter) {
+                        return "rgb(58, 58, 60)";
+                }
+
+                const letterInThatPosition = word.charAt(index);
+                const isCorrectPosition = letter === letterInThatPosition;
+
+                if(isCorrectPosition) {
+                        return "rgb(83, 141,78)";
+                }
+
+                return "rgb(181, 159, 59)"
         }
 
 
