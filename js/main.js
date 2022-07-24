@@ -18,6 +18,11 @@ document.addEventListener("DOMContentLoaded", () =>{
         
         //******FUNCTIONS******//
 
+        function getTileColor(letter, index) {
+                
+        }
+
+
         //handles the word submitted
         //error if word has less than 5 letters
         //alerts if player guessed the right word
@@ -38,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () =>{
                         
                         currentWordArr.forEach((letter,index) => {
                                 setTimeout(() => {
-                                        const tileColor = "rgb(58,58,60)";
+                                        const tileColor = getTileColor(letter, index);
 
                                         const letterId = firstLetterId + index;
                                         
