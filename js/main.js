@@ -70,8 +70,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
             //conditions of winning, more than 6 guesses and continuing after a wrong guess
             if(currentWord === word) {
-                window.alert("Congratulations!");
-        
+                setTimeout(() => {  window.alert("Congratulations!"); }, interval * 6);
             } else if(guessedWords.length === 6 && currentWordArr.length === 5) {
                 window.alert(`Sorry, you have no more guesses! The word is ${word}.`);
             } else {
@@ -119,13 +118,16 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     function handleDeleteLetter() {
             const currentWordArr = getCurrentWordArr();
+            //if(currentWordArr.length != 0)
             const removedLetter = currentWordArr.pop();
-        
+
+            
             guessedWords[guessedWords.length - 1] = currentWordArr;
         
             const lastLetterEl = document.getElementById(String(availableSpace - 1));
         
             lastLetterEl.textContent = "";
+            lastLetterEl.style = `background-color: black;border-color:rgb(58, 58, 60)`
             availableSpace = availableSpace - 1;
     }
 
