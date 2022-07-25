@@ -4,33 +4,59 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     //array consisting of the words guessed
     const guessedWords = [[]];
-
     let availableSpace = 1;
-
     //the correct word, for testing
     let word = "swear";
     //number of words guessed
     let guessedWordCount = 0;
+    let seen = [];
+    
     
     
     //******FUNCTIONS******//
+    function getLetterCount(letter) {
+        let letterCount = 0;
+        for (index = 0, len = word.length; index < len; index++) {
+            if (letter === word.charAt(index)) {
+                letterCount++;
+            }
+        }
+        return letterCount;
+    }
+
+    function countOccurence(letter) {
+        let seenCount = 0;
+        for (index = 0, len = seen.length; index < len; index++) {
+            if (letter === seen[index]) {
+                seenCount++;
+            }
+        }
+        return seenCount;
+    }
 
     function getTileColor(letter, index) {
 
-            const correctLetter = word.includes(letter);
+        const correctLetter = word.includes(letter);
 
-            if(!correctLetter) {
+        if(!correctLetter) {
+            return "rgb(58, 58, 60)";
+        } else {
+            if(countOccurence(letter) == getLetterCount(letter)){
                 return "rgb(58, 58, 60)";
+            } else {
+                seen.push(letter);
             }
 
-            const letterInThatPosition = word.charAt(index);
-            const isCorrectPosition = letter === letterInThatPosition;
+        }
 
-            if(isCorrectPosition) {
-                return "rgb(83, 141,78)";
-            }
+        const letterInThatPosition = word.charAt(index);
+        const isCorrectPosition = letter === letterInThatPosition;
 
-            return "rgb(181, 159, 59)"
+        if(isCorrectPosition) {
+            return "rgb(83, 141,78)";
+        }
+
+        return "rgb(181, 159, 59)"
     }
 
 
@@ -39,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     //alerts if player guessed the right word
     function handleSubmitWord() {
             
-            //get the current word array containing letters
+        //get the current word array containing letters
         const currentWordArr = getCurrentWordArr();
 
         //check if it meets length requirement
@@ -104,24 +130,25 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     //drawing the game area grid
     function createSquares() {
-            const gameBoard = document.getElementById("board");
+        const gameBoard = document.getElementById("board");
 
-            for (let i = 0; i < 30; i++){
-                let square = document.createElement("div");
-                square.classList.add("square");
-                square.classList.add("animate__animated");
-                square.setAttribute("id", i + 1);
-                gameBoard.appendChild(square);
+        for (let i = 0; i < 30; i++){
+            let square = document.createElement("div");
+            square.classList.add("square");
+            square.classList.add("animate__animated");
+            square.setAttribute("id", i + 1);
+            gameBoard.appendChild(square);
 
-            }
+        }
     }
 
     function handleDeleteLetter() {
-            const currentWordArr = getCurrentWordArr();
-            //if(currentWordArr.length != 0)
+        const currentWordArr = getCurrentWordArr();
+        //if(currentWordArr.length != 0)
+        if (currentWordArr != []) {
             const removedLetter = currentWordArr.pop();
 
-            
+        
             guessedWords[guessedWords.length - 1] = currentWordArr;
         
             const lastLetterEl = document.getElementById(String(availableSpace - 1));
@@ -129,27 +156,24 @@ document.addEventListener("DOMContentLoaded", () =>{
             lastLetterEl.textContent = "";
             lastLetterEl.style = `background-color: black;border-color:rgb(58, 58, 60)`
             availableSpace = availableSpace - 1;
+        }
     }
 
-        //adding onclick function to every on the keyboard
-
+    //adding onclick function to every on the keyboard
     const keys = document.querySelectorAll(".keyboard-row button")
 
     for (let i = 0; i < keys.length; i++) {
         keys[i].onclick = ({target}) => {
             const letter = target.getAttribute("data-key");
-            //console.log(key);
-            
+                      
             if(letter === 'enter') {
                 handleSubmitWord();
                 return;
             }
-
             if (letter === "del") {
                 handleDeleteLetter();
                 return;
             }
-
             updateGuessedWord(letter);
         }           
     }          
