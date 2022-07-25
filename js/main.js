@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () =>{
             } else {
                 seen.push(letter);
             }
-
         }
 
         const letterInThatPosition = word.charAt(index);
@@ -93,14 +92,18 @@ document.addEventListener("DOMContentLoaded", () =>{
             });
 
             guessedWordCount += 1;
+            console.log(guessedWordCount);
 
             //conditions of winning, more than 6 guesses and continuing after a wrong guess
             if(currentWord === word) {
                 setTimeout(() => {  window.alert("Congratulations!"); }, interval * 6);
             } else if(guessedWords.length === 6 && currentWordArr.length === 5) {
-                window.alert(`Sorry, you have no more guesses! The word is ${word}.`);
+                setTimeout(() => 
+                    {  window.alert(`Sorry, you have no more guesses! The word is ${word}.`); }, interval * 6);
+                
             } else {
                 guessedWords.push([]);
+                
             }
         }       
     }
@@ -145,10 +148,10 @@ document.addEventListener("DOMContentLoaded", () =>{
     function handleDeleteLetter() {
         const currentWordArr = getCurrentWordArr();
         //if(currentWordArr.length != 0)
-        if (currentWordArr != []) {
+        
+        if(currentWordArr.length > 0) {
             const removedLetter = currentWordArr.pop();
 
-        
             guessedWords[guessedWords.length - 1] = currentWordArr;
         
             const lastLetterEl = document.getElementById(String(availableSpace - 1));
@@ -156,7 +159,8 @@ document.addEventListener("DOMContentLoaded", () =>{
             lastLetterEl.textContent = "";
             lastLetterEl.style = `background-color: black;border-color:rgb(58, 58, 60)`
             availableSpace = availableSpace - 1;
-        }
+            }
+        
     }
 
     //adding onclick function to every on the keyboard
