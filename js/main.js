@@ -24,7 +24,8 @@ document.addEventListener("DOMContentLoaded", () =>{
           })
           .then((res) => {
             word = res[0];
-            console.log(word);
+            //this line is for testing
+            //console.log(word);
           })
           .catch((err) => {
             console.error(err);
