@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     createSquares();
     getNewWord();
+    //getValidWord()
 
     //array consisting of the words guessed
     const guessedWords = [[]];
@@ -23,14 +24,27 @@ document.addEventListener("DOMContentLoaded", () =>{
           })
           .then((res) => {
             word = res[0];
-            //console.log(word);
+            console.log(word);
           })
           .catch((err) => {
             console.error(err);
           });
-      }
+    }
 
-
+    function getValidWord() {
+        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/bottle`)
+          .then((response) => {
+            return response.json();
+          })
+          .then((res) => {
+            if(res.hasOwnProperty("title")) {
+                throw Error();
+            }
+          })
+          .catch((err) => {
+            //console.error(err);
+          });
+    }
 
     //gets current array containing letters of the word
     function getCurrentWordArr () {
