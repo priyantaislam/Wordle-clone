@@ -1,12 +1,14 @@
 document.addEventListener("DOMContentLoaded", () =>{
 
     createSquares();
+    getNewWord();
 
     //array consisting of the words guessed
     const guessedWords = [[]];
     let availableSpace = 1;
     //the correct word, for testing
-    let word = "swear";
+    let word;
+    
     //number of words guessed
     let guessedWordCount = 0;
     let seen = [];
@@ -14,6 +16,21 @@ document.addEventListener("DOMContentLoaded", () =>{
     
     
     //******FUNCTIONS******//
+    function getNewWord() {
+        fetch(`https://random-word-api.herokuapp.com/word?length=5`)
+          .then((response) => {
+            return response.json();
+          })
+          .then((res) => {
+            word = res[0];
+            //console.log(word);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+
+
 
     //gets current array containing letters of the word
     function getCurrentWordArr () {
@@ -78,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () =>{
         if(isCorrectPosition) {
             return "rgb(83, 141,78)";
         }
-
         return "rgb(181, 159, 59)"
     }
 
@@ -123,13 +139,10 @@ document.addEventListener("DOMContentLoaded", () =>{
                 setTimeout(() => {  window.alert("Congratulations!"); }, interval * 6);
             } else if(guessedWords.length === 6 && currentWordArr.length === 5) {
                 setTimeout(() => 
-                    {  window.alert(`Sorry, you have no more guesses! The word is ${word}.`); }, interval * 6);
-                
+                    {  window.alert(`Sorry, you have no more guesses! The word is ${word}.`); }, interval * 6);   
             } else {
-                guessedWords.push([]);
-                
+                guessedWords.push([]);    
             }
-
             seen = [];
         }       
     }
