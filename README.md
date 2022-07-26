@@ -10,6 +10,13 @@ A Wordle clone made using HTML, CSS and JavaScript. The website uses a random wo
   <img src="https://user-images.githubusercontent.com/31027335/180976622-bb8d6226-8072-4cdd-9846-76327d1f4a64.png" width="700">
 </p>
 
+## Technologies Used
+
+* HTML
+* CSS
+* JavaScript
+* Git
+
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/31027335/180976631-3c3e42fe-b594-4584-80b1-ecd9ed66c128.png" width="700">
