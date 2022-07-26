@@ -14,6 +14,28 @@ document.addEventListener("DOMContentLoaded", () =>{
     
     
     //******FUNCTIONS******//
+
+    //gets current array containing letters of the word
+    function getCurrentWordArr () {
+        const numOfGuess = guessedWords.length;
+        return guessedWords[numOfGuess - 1];
+    }
+
+    //updates the word according to input
+    function updateGuessedWord(letter) {
+        const currentWordArr = getCurrentWordArr();
+
+        if(currentWordArr && currentWordArr.length < 5) {
+            currentWordArr.push(letter);
+
+            const availableSpaceEl = document.getElementById(String(availableSpace));
+            availableSpace = availableSpace + 1;
+    
+            availableSpaceEl.textContent = letter;
+        }      
+
+    }
+
     function getLetterCount(letter) {
         let letterCount = 0;
         for (index = 0, len = word.length; index < len; index++) {
@@ -37,15 +59,17 @@ document.addEventListener("DOMContentLoaded", () =>{
     function getTileColor(letter, index) {
 
         const correctLetter = word.includes(letter);
+        const seenCount = countOccurence(letter);
+        const letterInWord = getLetterCount(letter);
 
         if(!correctLetter) {
             return "rgb(58, 58, 60)";
+        } 
+        
+        if(seenCount != letterInWord){
+            seen.push(letter);
         } else {
-            if(countOccurence(letter) == getLetterCount(letter)){
-                return "rgb(58, 58, 60)";
-            } else {
-                seen.push(letter);
-            }
+            return "rgb(58, 58, 60)";
         }
 
         const letterInThatPosition = word.charAt(index);
@@ -105,31 +129,10 @@ document.addEventListener("DOMContentLoaded", () =>{
                 guessedWords.push([]);
                 
             }
+
+            seen = [];
         }       
     }
-
-
-    //gets current array containing letters of the word
-    function getCurrentWordArr () {
-        const numOfGuess = guessedWords.length;
-        return guessedWords[numOfGuess - 1];
-    }
-
-    //updates the word according to input
-    function updateGuessedWord(letter) {
-        const currentWordArr = getCurrentWordArr();
-
-        if(currentWordArr && currentWordArr.length < 5) {
-            currentWordArr.push(letter);
-
-            const availableSpaceEl = document.getElementById(String(availableSpace));
-            availableSpace = availableSpace + 1;
-    
-            availableSpaceEl.textContent = letter;
-        }      
-
-    }
-
 
     //drawing the game area grid
     function createSquares() {
@@ -182,3 +185,6 @@ document.addEventListener("DOMContentLoaded", () =>{
         }           
     }          
 })
+
+
+
