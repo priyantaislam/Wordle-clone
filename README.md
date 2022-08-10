@@ -3,7 +3,8 @@ A website project cloning the New York Times game Wordle.
 
 ## Overview
 
-A Wordle clone made using HTML, CSS and JavaScript. The website uses a random word API to generate the game word. 
+A Wordle clone made using HTML, CSS and JavaScript. The website uses a random word API to generate the game word. RapidAPI key for the random word api
+needs to be added in the code.
 
 
 <p align="center">
