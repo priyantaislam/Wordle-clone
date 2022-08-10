@@ -17,19 +17,24 @@ document.addEventListener("DOMContentLoaded", () =>{
     
     
     //******FUNCTIONS******//
+
     function getNewWord() {
-        fetch(`https://random-word-api.herokuapp.com/word?length=5`)
-          .then((response) => {
-            return response.json();
-          })
-          .then((res) => {
-            word = res[0];
-            //this line is for testing
-            //console.log(word);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': 'ADD_API_KEY',
+                'X-RapidAPI-Host': 'random-words5.p.rapidapi.com'
+            }
+        };
+        
+        fetch('https://random-words5.p.rapidapi.com/getMultipleRandom?count=2&wordLength=5', options)
+            .then(response => response.json())
+            .then((res) => {
+                word = res[0];
+                //this line is for testing
+                console.log(word);
+              })
+            .catch(err => console.error(err));
     }
 
     function getValidWord() {
@@ -147,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () =>{
             });
 
             guessedWordCount += 1;
-            console.log(guessedWordCount);
+            //console.log(guessedWordCount);
 
             //conditions of winning, more than 6 guesses and continuing after a wrong guess
             if(currentWord === word) {
