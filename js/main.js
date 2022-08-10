@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
     //updates the word according to input
+    //helper function
     function updateGuessedWord(letter) {
         const currentWordArr = getCurrentWordArr();
 
