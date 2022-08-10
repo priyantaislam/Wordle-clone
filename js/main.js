@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         const options = {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': 'ADD_API_KEY',
+                'X-RapidAPI-Key': 'ADD_KEY',
                 'X-RapidAPI-Host': 'random-words5.p.rapidapi.com'
             }
         };
@@ -37,26 +37,12 @@ document.addEventListener("DOMContentLoaded", () =>{
             .catch(err => console.error(err));
     }
 
-    function getValidWord() {
-        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/bottle`)
-          .then((response) => {
-            return response.json();
-          })
-          .then((res) => {
-            if(res.hasOwnProperty("title")) {
-                throw Error();
-            }
-          })
-          .catch((err) => {
-            //console.error(err);
-          });
-    }
-
     //gets current array containing letters of the word
     function getCurrentWordArr () {
         const numOfGuess = guessedWords.length;
         return guessedWords[numOfGuess - 1];
     }
+
 
     //updates the word according to input
     function updateGuessedWord(letter) {
@@ -72,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         }      
 
     }
+
 
     function getLetterCount(letter) {
         let letterCount = 0;
@@ -134,36 +121,54 @@ document.addEventListener("DOMContentLoaded", () =>{
                 
             //combine it into a string
             const currentWord = currentWordArr.join('');
-            const firstLetterId = guessedWordCount * 5  + 1;
-            const interval = 300;
             
-            currentWordArr.forEach((letter,index) => {
-                setTimeout(() => {
-                    const tileColor = getTileColor(letter, index);
+            fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${currentWord}`)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((res) => {
+                    if(res.hasOwnProperty("title")) {
+                        throw Error();
+                    }
 
-                    const letterId = firstLetterId + index;
+                    const firstLetterId = guessedWordCount * 5  + 1;
+                    const interval = 300;
                     
-                    //get the html element containing the letter
-                    const letterEl = document.getElementById(letterId);
-                    //add animation
-                    letterEl.classList.add("animate__flipInX");
-                    letterEl.style = `background-color: ${tileColor};border-color:${tileColor}`;
-                }, interval * index);
-            });
+                    currentWordArr.forEach((letter,index) => {
+                        setTimeout(() => {
+                            const tileColor = getTileColor(letter, index);
 
-            guessedWordCount += 1;
-            //console.log(guessedWordCount);
+                            const letterId = firstLetterId + index;
+                            
+                            //get the html element containing the letter
+                            const letterEl = document.getElementById(letterId);
+                            //add animation
+                            letterEl.classList.add("animate__flipInX");
+                            letterEl.style = `background-color: ${tileColor};border-color:${tileColor}`;
+                        }, interval * index);
+                    });
 
-            //conditions of winning, more than 6 guesses and continuing after a wrong guess
-            if(currentWord === word) {
-                setTimeout(() => {  window.alert("Congratulations!"); }, interval * 6);
-            } else if(guessedWords.length === 6 && currentWordArr.length === 5) {
-                setTimeout(() => 
-                    {  window.alert(`Sorry, you have no more guesses! The word is ${word}.`); }, interval * 6);   
-            } else {
-                guessedWords.push([]);    
-            }
-            seen = [];
+                    guessedWordCount += 1;
+                    //console.log(guessedWordCount);
+
+                    //conditions of winning, more than 6 guesses and continuing after a wrong guess
+                    if(currentWord === word) {
+                        setTimeout(() => {  window.alert("Congratulations!"); }, interval * 6);
+                    } else if(guessedWords.length === 6 && currentWordArr.length === 5) {
+                        setTimeout(() => 
+                            {  window.alert(`Sorry, you have no more guesses! The word is ${word}.`); }, interval * 6);   
+                    } else {
+                        guessedWords.push([]);    
+                    }
+                    seen = [];
+
+
+
+                })
+                .catch((err) => {
+                    //console.error(err);
+                    window.alert("Not a valid word!");
+                });
         }       
     }
 
